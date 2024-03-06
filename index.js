@@ -2,13 +2,14 @@
 // import express
 let express = require('express');
 const { default: mongoose } = require('mongoose');
-
 let cors = require('cors');
 
 // import model file
-let tweetsmodel = require('./model/tweets');
+let tweetsM = require('./model/tweets');
 
 let port = 1234;
+
+
 
 let tweets = [
     {
@@ -87,7 +88,7 @@ app.get('/tweets', (request, response) => {
 app.get('/1.0/tweets/all', (request, response) => {
     console.log(`Endpoint is ${request.url}, method is ${request.method}`);
     // interact with mongboDB with model file
-    tweetsmodel.find({})
+    tweetsM.find({})
         .then(data => {
             console.log(`${request.url} success!`);
             // set request status to 200 and send data back to client as response
@@ -107,7 +108,7 @@ app.post('/1.0/tweets/add', (request, response) => {
     console.log(requestBody);
 
     // create a new instance of model and assign the requestBody to it
-    let tweetsmodelNew = new tweetsmodel(requestBody);
+    let tweetsmodelNew = new tweetsM(requestBody);
     // save the new instance
     tweetsmodelNew.save()
         .then(data => {
@@ -133,7 +134,7 @@ app.put('/1.0/tweets/update/:id', (request, response) => {
     let id = request.params.id;
     // find the tweet by id and update it
     // save the new instance
-    tweetsmodel.findByIdAndUpdate(id, requestBody, { new: true })
+    tweetsM.findByIdAndUpdate(id, requestBody, { new: true })
         .then(data => {
             console.log(`${request.url} success!`);
             // set request status to 200 and send data back to client as response
@@ -151,7 +152,7 @@ app.delete('/1.0/tweets/delete/:id', (request, response) => {
     console.log(`Endpoint is ${request.url}, method is ${request.method}`);
     console.log(request.params);
     let id = request.params.id;
-    tweetsmodel = tweetsmodel.findByIdAndDelete(id)
+    tweetsmodel = tweetsM.findByIdAndDelete(id)
         .then(data => {
             console.log(`${request.url} success!`);
             // set request status to 200 and send data back to client as response

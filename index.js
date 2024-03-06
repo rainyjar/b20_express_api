@@ -3,12 +3,12 @@
 let express = require('express');
 const { default: mongoose } = require('mongoose');
 
+let cors = require('cors');
+
 // import model file
 let tweetsmodel = require('./model/tweets');
 
 let port = 1234;
-
-let cors = require('cors');
 
 let tweets = [
     {
